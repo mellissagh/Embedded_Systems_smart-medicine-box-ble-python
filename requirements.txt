@@ -1,0 +1,4 @@
+bleak
+customtkinter
+matplotlib
+python-telegram-bot
