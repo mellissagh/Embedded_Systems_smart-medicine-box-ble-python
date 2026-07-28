@@ -1,5 +1,0 @@
-bleak
-customtkinter
-matplotlib
-python-telegram-bot
-python-dotenv
