@@ -13,7 +13,7 @@ Communication between them is performed over **Bluetooth Low Energy (BLE)**.
 
 ## System Architecture
 
-![System Architecture](images/system_architecture.png)
+![System Architecture](block_diagram.png)
 ## Features
 
 ✔ Bluetooth Low Energy communication (HM-11)
