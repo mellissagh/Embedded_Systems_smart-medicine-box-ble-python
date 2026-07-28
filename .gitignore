@@ -1,0 +1,123 @@
+# ============================================================
+# Smart Medicine Box BLE Python Project - .gitignore
+# ============================================================
+
+# Local SQLite database files
+data/*.db
+*.sqlite
+*.sqlite3
+
+# Environment variables / secrets
+.env
+.envrc
+
+# Python bytecode / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.env
+.venv/
+__pycache__/
+*.pyc
+data/*.db
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Python packaging / build files
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# C extensions
+*.so
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py.cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# mypy / type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+
+# Ruff
+.ruff_cache/
+
+# VS Code temporary files
+tempCodeRunnerFile.py
+
+# macOS files
+.DS_Store
+
+# Logs
+*.log
+
+# Local config files
+local_settings.py
+
+# Telegram bot secrets should not be uploaded
+telegram_token.txt
+
+# Arduino temporary/build files
+*.hex
+*.elf
+*.bin
+
+# Documentation build output
+docs/_build/
+site/
+# Local Python and private runtime files
+.env
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+data/*.db
