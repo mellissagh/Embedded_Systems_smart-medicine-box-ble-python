@@ -11,7 +11,9 @@ This repository contains the Python desktop application used to communicate with
 The Arduino firmware is written in **C++**, while the desktop application is written in **Python**.
 Communication between them is performed over **Bluetooth Low Energy (BLE)**.
 
+## System Architecture
 
+![System Architecture](images/system_architecture.png)
 ## Features
 
 ✔ Bluetooth Low Energy communication (HM-11)
