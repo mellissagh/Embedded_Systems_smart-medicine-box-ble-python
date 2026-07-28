@@ -17,6 +17,11 @@ __pycache__/
 *$py.class
 
 # Virtual environments
+.env
+.venv/
+__pycache__/
+*.pyc
+data/*.db
 .venv/
 venv/
 env/
