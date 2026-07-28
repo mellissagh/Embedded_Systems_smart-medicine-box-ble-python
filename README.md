@@ -39,9 +39,11 @@ Install the required Python libraries:
 
 ```bash
 pip install -r requirements.txt
+```
 
-##Hardware
 
+ ## Hardware
+ 
 - Arduino Uno R3
 - HM-11 BLE
 - IR LEDs
@@ -49,4 +51,6 @@ pip install -r requirements.txt
 - Microswitch
 - LCD 16x2
 - Breadboard
+
+
 
