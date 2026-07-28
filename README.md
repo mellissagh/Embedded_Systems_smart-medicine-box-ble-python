@@ -7,13 +7,22 @@ This project contains the Python software for the Smart Medicine Box embedded sy
 
 The system connects to the medicine box using Bluetooth Low Energy, receives medicine usage data, displays it in a caregiver dashboard, generates adherence reports, and sends alerts through Telegram.
 
+
 ## Features
 
-- BLE connection to the medicine box hardware
-- Real-time dashboard using CustomTkinter
-- Medicine adherence logging
-- Graphical reports using Matplotlib
-- Telegram alerts for missed doses or important events
+✔ Bluetooth Low Energy communication (HM-11)
+
+✔ Real-time medicine status monitoring
+
+✔ Medication adherence tracking
+
+✔ Daily and weekly reports
+
+✔ Telegram notifications
+
+✔ LCD synchronization with hardware
+
+✔ Interactive desktop dashboard
 
 ## Technologies Used
 
@@ -30,3 +39,14 @@ Install the required Python libraries:
 
 ```bash
 pip install -r requirements.txt
+
+##Hardware
+
+- Arduino Uno R3
+- HM-11 BLE
+- IR LEDs
+- Phototransistors
+- Microswitch
+- LCD 16x2
+- Breadboard
+
