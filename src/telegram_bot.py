@@ -129,19 +129,82 @@ def _slot_icon(slot: str) -> str:
     return {"MORNING": "🌅", "AFTERNOON": "☀️", "EVENING": "🌙"}.get(slot, "💊")
 
 
+def _physical_slot_status(
+    slot: str,
+    sensor_state: object,
+    sessions_by_slot: dict[str, dict[str, object]],
+) -> str:
+    """Explain whether an absent pill is correct, wrong or not yet confirmed."""
+    state = str(sensor_state or "Unknown").upper()
+    if state != "ABSENT":
+        return state
+
+    session = sessions_by_slot.get(slot)
+    if session is not None:
+        session_status = str(session.get("status") or "")
+        issue = str(session.get("provisional_issue") or "")
+        expected_slot = str(session.get("expected_slot") or "").upper()
+
+        if expected_slot == slot and session_status in {
+            "COMPLETED",
+            "COMPLETED_AFTER_CORRECTION",
+        }:
+            return "ABSENT — ✅ correct dose taken"
+
+        if session_status == "NEEDS_CORRECTION":
+            if expected_slot != slot and issue in {"WRONG_PILL", "MULTIPLE_PILLS"}:
+                return "ABSENT — ❌ wrong/extra pill removed"
+            if expected_slot == slot and issue == "MULTIPLE_PILLS":
+                return "ABSENT — ⚠️ correct pill removed, but an extra pill is also out"
+
+        if expected_slot == slot and session_status in {"IN_PROGRESS", "WAITING_FOR_DOSE"}:
+            return "ABSENT — ⏳ expected pill removed; waiting for confirmation"
+
+    # Check whether this slot is an extra absent pill in another active session.
+    for session in sessions_by_slot.values():
+        issue = str(session.get("provisional_issue") or "")
+        session_status = str(session.get("status") or "")
+        expected_slot = str(session.get("expected_slot") or "").upper()
+        if (
+            expected_slot != slot
+            and session_status == "NEEDS_CORRECTION"
+            and issue in {"WRONG_PILL", "MULTIPLE_PILLS"}
+        ):
+            return "ABSENT — ❌ wrong/extra pill removed"
+
+    return "ABSENT — ⚠️ not confirmed as the correct dose"
+
+
 def format_status() -> str:
     status = get_system_status()
     if not status:
         return "No medicine-box status is available yet."
+
+    sessions = fetch_today_dose_sessions()
+    sessions_by_slot = {
+        str(session["expected_slot"]).upper(): session
+        for session in sessions
+    }
     ble = "🟢 Connected" if status.get("ble_connected") else "🔴 Disconnected"
+
+    morning = _physical_slot_status(
+        "MORNING", status.get("morning_state"), sessions_by_slot
+    )
+    afternoon = _physical_slot_status(
+        "AFTERNOON", status.get("afternoon_state"), sessions_by_slot
+    )
+    evening = _physical_slot_status(
+        "EVENING", status.get("evening_state"), sessions_by_slot
+    )
+
     return (
         "📦 Smart medicine-box status\n\n"
         f"BLE: {ble}\n"
         f"Last seen: {status.get('last_seen') or 'Unknown'}\n"
         f"Lid: {status.get('lid_state') or 'Unknown'}\n\n"
-        f"🌅 Morning: {status.get('morning_state') or 'Unknown'}\n"
-        f"☀️ Afternoon: {status.get('afternoon_state') or 'Unknown'}\n"
-        f"🌙 Evening: {status.get('evening_state') or 'Unknown'}"
+        f"🌅 Morning: {morning}\n"
+        f"☀️ Afternoon: {afternoon}\n"
+        f"🌙 Evening: {evening}"
     )
 
 
@@ -531,7 +594,7 @@ class TelegramBotService:
         elif data == "pt:status":
             await query.edit_message_text(format_status(), reply_markup=back_button("pt"))
         elif data == "pt:remind":
-            success = await self._send_hardware_command("CMD|BUZZER|PATIENT_REMINDER")
+            success = await self._send_hardware_command("CMD|BUZZER|CAREGIVER_REMINDER")
             await query.edit_message_text(
                 "🔔 Reminder sent to the box." if success else "🔴 The box is offline, so a reminder could not be sent.",
                 reply_markup=back_button("pt"),

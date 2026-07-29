@@ -1,5 +1,4 @@
 bleak
 customtkinter
 matplotlib
-python-telegram-bot
-python-dotenv
+python-telegram-botpython-dotenv
