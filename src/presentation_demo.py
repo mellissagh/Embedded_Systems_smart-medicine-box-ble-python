@@ -188,12 +188,12 @@ def configure_presentation_demo() -> None:
 
     print()
     print(
-        "Each stage starts 5 minutes "
+        "Each stage starts 2 minutes "
         "after the previous stage."
     )
 
     print(
-        "Dose window: 4 minutes"
+        "Dose window: 1 minute"
     )
 
     print(
